@@ -1,0 +1,92 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
+All colors MUST be HSL.
+*/
+
+@layer base {
+  :root {
+    --background: 222 47% 11%;
+    --foreground: 210 40% 98%;
+
+    --card: 222 47% 15%;
+    --card-foreground: 210 40% 98%;
+
+    --popover: 222 47% 15%;
+    --popover-foreground: 210 40% 98%;
+
+    --primary: 142 76% 50%;
+    --primary-foreground: 222 47% 11%;
+
+    --secondary: 217 91% 60%;
+    --secondary-foreground: 222 47% 11%;
+
+    --muted: 217 33% 17%;
+    --muted-foreground: 215 20% 65%;
+
+    --accent: 320 86% 58%;
+    --accent-foreground: 222 47% 11%;
+
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 222 47% 11%;
+
+    --border: 217 33% 22%;
+    --input: 217 33% 22%;
+    --ring: 142 76% 50%;
+
+    --radius: 0.75rem;
+
+    /* Professional Neon Colors */
+    --neon-lime: 142 76% 50%;
+    --neon-pink: 320 86% 58%;
+    --neon-purple: 271 81% 56%;
+    --neon-gold: 45 93% 58%;
+    --neon-cyan: 189 94% 53%;
+    --neon-blue: 217 91% 60%;
+
+    /* Gradients */
+    --gradient-primary: linear-gradient(135deg, hsl(142 76% 50%), hsl(189 94% 53%));
+    --gradient-secondary: linear-gradient(135deg, hsl(217 91% 60%), hsl(271 81% 56%));
+    --gradient-gold: linear-gradient(135deg, hsl(45 93% 58%), hsl(38 92% 50%));
+    --gradient-text: linear-gradient(135deg, hsl(142 76% 50%), hsl(189 94% 53%), hsl(217 91% 60%));
+
+    /* Shadows */
+    --shadow-neon: 0 4px 20px hsl(142 76% 50% / 0.3);
+    --shadow-pink: 0 4px 20px hsl(320 86% 58% / 0.3);
+    --shadow-purple: 0 4px 20px hsl(271 81% 56% / 0.3);
+    --shadow-card: 0 8px 30px hsl(222 47% 8% / 0.4);
+  }
+}
+
+@layer utilities {
+  .gradient-text {
+    background: var(--gradient-text);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .neon-glow {
+    text-shadow: 0 2px 10px hsl(var(--neon-lime) / 0.5);
+  }
+
+  .pink-glow {
+    text-shadow: 0 2px 10px hsl(var(--neon-pink) / 0.4);
+  }
+
+  .page-heading {
+    @apply text-4xl md:text-5xl lg:text-6xl font-black tracking-tight;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+  }
+}

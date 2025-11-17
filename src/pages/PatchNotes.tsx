@@ -1,0 +1,131 @@
+import { useState, useEffect } from "react";
+import { Card } from "@/components/ui/card";
+import { MoneyRain } from "@/components/MoneyRain";
+
+interface PatchNote {
+  timestamp: number;
+  buffs: string[];
+  nerfs: string[];
+  bugFixes: string[];
+  newFeatures: string[];
+}
+
+export default function PatchNotes() {
+  const [patches, setPatches] = useState<PatchNote[]>([]);
+  const [version, setVersion] = useState("1.0");
+
+  useEffect(() => {
+    const savedPatches = JSON.parse(localStorage.getItem("getrichify-patches") || "[]");
+    setPatches(savedPatches);
+
+    const actions = JSON.parse(localStorage.getItem("getrichify-actions") || "0");
+    setVersion(`${Math.floor(actions / 10)}.${actions % 10}`);
+  }, []);
+
+  return (
+    <div className="min-h-screen relative pt-20">
+      <MoneyRain />
+
+      <div className="relative z-10 container mx-auto px-4 py-8">
+        <div className="max-w-4xl mx-auto">
+          <div className="text-center mb-12 animate-slide-in">
+            <h1 className="page-heading gradient-text mb-4">
+              Your Patch Notes v{version}
+            </h1>
+            <p className="text-lg text-muted-foreground">
+              Tracking your personal updates in real-time
+            </p>
+          </div>
+
+          {patches.length === 0 ? (
+            <Card className="bg-card border border-border p-12 text-center">
+              <p className="text-xl text-muted-foreground mb-4">
+                No patch notes yet
+              </p>
+              <p className="text-muted-foreground">
+                Start chatting to generate your first update
+              </p>
+            </Card>
+          ) : (
+            <div className="space-y-6">
+              {patches.map((patch, index) => (
+                <Card
+                  key={index}
+                  className="bg-card border border-border p-6 animate-pop-in hover:shadow-neon transition-shadow"
+                >
+                  <div className="mb-4">
+                    <p className="text-sm text-muted-foreground">
+                      {new Date(patch.timestamp).toLocaleString()}
+                    </p>
+                  </div>
+
+                  <div className="grid md:grid-cols-2 gap-6">
+                    {/* Buffs */}
+                    <div>
+                      <h3 className="text-2xl font-bold text-neon-lime mb-3 flex items-center gap-2">
+                        ⬆️ Buffs
+                      </h3>
+                      <ul className="space-y-2">
+                        {patch.buffs.map((buff, i) => (
+                          <li key={i} className="text-foreground/90 flex items-start gap-2">
+                            <span className="text-neon-lime">+</span>
+                            {buff}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+
+                    {/* Nerfs */}
+                    <div>
+                      <h3 className="text-2xl font-bold text-neon-pink mb-3 flex items-center gap-2">
+                        ⬇️ Nerfs
+                      </h3>
+                      <ul className="space-y-2">
+                        {patch.nerfs.map((nerf, i) => (
+                          <li key={i} className="text-foreground/90 flex items-start gap-2">
+                            <span className="text-neon-pink">-</span>
+                            {nerf}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+
+                    {/* Bug Fixes */}
+                    <div>
+                      <h3 className="text-2xl font-bold text-neon-cyan mb-3 flex items-center gap-2">
+                        🐛 Bug Fixes
+                      </h3>
+                      <ul className="space-y-2">
+                        {patch.bugFixes.map((fix, i) => (
+                          <li key={i} className="text-foreground/90 flex items-start gap-2">
+                            <span className="text-neon-cyan">✓</span>
+                            {fix}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+
+                    {/* New Features */}
+                    <div>
+                      <h3 className="text-2xl font-bold text-neon-purple mb-3 flex items-center gap-2">
+                        ✨ New Features
+                      </h3>
+                      <ul className="space-y-2">
+                        {patch.newFeatures.map((feature, i) => (
+                          <li key={i} className="text-foreground/90 flex items-start gap-2">
+                            <span className="text-neon-purple">★</span>
+                            {feature}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </div>
+                </Card>
+              ))}
+            </div>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+}
