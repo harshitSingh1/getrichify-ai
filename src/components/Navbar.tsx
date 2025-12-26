@@ -1,6 +1,6 @@
 import { Link, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Menu, X } from "lucide-react";
+import { Menu, X, Snowflake } from "lucide-react";
 import { useState } from "react";
 import { Logo } from "./Logo";
 
@@ -21,7 +21,7 @@ export const Navbar = () => {
   const isActive = (path: string) => location.pathname === path;
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 bg-background/95 backdrop-blur-md border-b border-border">
+    <nav className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-xl border-b border-christmas-snow/10">
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between h-16">
           <Link to="/" className="hover:opacity-80 transition-opacity">
@@ -29,15 +29,23 @@ export const Navbar = () => {
           </Link>
 
           {/* Desktop Menu */}
-          <div className="hidden md:flex items-center gap-2">
+          <div className="hidden lg:flex items-center gap-1">
             {links.map((link) => (
               <Button
                 key={link.to}
                 asChild
                 variant={isActive(link.to) ? "default" : "ghost"}
-                className={isActive(link.to) ? "shadow-neon" : ""}
+                size="sm"
+                className={`text-sm font-medium transition-all duration-300 ${
+                  isActive(link.to) 
+                    ? "bg-gradient-primary shadow-glow text-primary-foreground" 
+                    : "hover:bg-christmas-snow/5 hover:text-christmas-gold"
+                }`}
               >
-                <Link to={link.to}>{link.label}</Link>
+                <Link to={link.to} className="flex items-center gap-1">
+                  {isActive(link.to) && <Snowflake className="w-3 h-3" />}
+                  {link.label}
+                </Link>
               </Button>
             ))}
           </div>
@@ -46,27 +54,33 @@ export const Navbar = () => {
           <Button
             variant="ghost"
             size="icon"
-            className="md:hidden"
+            className="lg:hidden hover:bg-christmas-snow/10"
             onClick={() => setIsOpen(!isOpen)}
           >
-            {isOpen ? <X /> : <Menu />}
+            {isOpen ? <X className="text-christmas-snow" /> : <Menu className="text-christmas-snow" />}
           </Button>
         </div>
 
         {/* Mobile Menu */}
         {isOpen && (
-          <div className="md:hidden pb-4 animate-slide-in">
-            {links.map((link) => (
+          <div className="lg:hidden pb-4 animate-slide-in">
+            {links.map((link, index) => (
               <Button
                 key={link.to}
                 asChild
                 variant={isActive(link.to) ? "default" : "ghost"}
-                className={`w-full justify-start mb-2 ${
-                  isActive(link.to) ? "shadow-neon" : ""
+                className={`w-full justify-start mb-2 transition-all duration-300 ${
+                  isActive(link.to) 
+                    ? "bg-gradient-primary shadow-glow" 
+                    : "hover:bg-christmas-snow/5"
                 }`}
+                style={{ animationDelay: `${index * 50}ms` }}
                 onClick={() => setIsOpen(false)}
               >
-                <Link to={link.to}>{link.label}</Link>
+                <Link to={link.to} className="flex items-center gap-2">
+                  {isActive(link.to) && <Snowflake className="w-4 h-4" />}
+                  {link.label}
+                </Link>
               </Button>
             ))}
           </div>
