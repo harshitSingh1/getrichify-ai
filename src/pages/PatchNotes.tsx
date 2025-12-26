@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { Card } from "@/components/ui/card";
-import { MoneyRain } from "@/components/MoneyRain";
+import { Snowfall } from "@/components/Snowfall";
+import { Sparkles, TrendingUp, TrendingDown, Bug, Star } from "lucide-react";
 
 interface PatchNote {
   timestamp: number;
@@ -24,12 +25,12 @@ export default function PatchNotes() {
 
   return (
     <div className="min-h-screen relative pt-20">
-      <MoneyRain />
+      <Snowfall />
 
       <div className="relative z-10 container mx-auto px-4 py-8">
         <div className="max-w-4xl mx-auto">
           <div className="text-center mb-12 animate-slide-in">
-            <h1 className="page-heading gradient-text mb-4">
+            <h1 className="page-heading gradient-text christmas-glow mb-4">
               Your Patch Notes v{version}
             </h1>
             <p className="text-lg text-muted-foreground">
@@ -38,8 +39,9 @@ export default function PatchNotes() {
           </div>
 
           {patches.length === 0 ? (
-            <Card className="bg-card border border-border p-12 text-center">
-              <p className="text-xl text-muted-foreground mb-4">
+            <Card className="festive-card p-12 text-center">
+              <Sparkles className="w-16 h-16 mx-auto mb-4 text-christmas-gold animate-twinkle" />
+              <p className="text-xl text-christmas-snow mb-4">
                 No patch notes yet
               </p>
               <p className="text-muted-foreground">
@@ -51,7 +53,8 @@ export default function PatchNotes() {
               {patches.map((patch, index) => (
                 <Card
                   key={index}
-                  className="bg-card border border-border p-6 animate-pop-in hover:shadow-neon transition-shadow"
+                  className="festive-card p-6 animate-pop-in"
+                  style={{ animationDelay: `${index * 100}ms` }}
                 >
                   <div className="mb-4">
                     <p className="text-sm text-muted-foreground">
@@ -62,13 +65,14 @@ export default function PatchNotes() {
                   <div className="grid md:grid-cols-2 gap-6">
                     {/* Buffs */}
                     <div>
-                      <h3 className="text-2xl font-bold text-neon-lime mb-3 flex items-center gap-2">
-                        ⬆️ Buffs
+                      <h3 className="text-2xl font-bold text-christmas-green mb-3 flex items-center gap-2">
+                        <TrendingUp className="w-6 h-6" />
+                        Buffs
                       </h3>
                       <ul className="space-y-2">
                         {patch.buffs.map((buff, i) => (
-                          <li key={i} className="text-foreground/90 flex items-start gap-2">
-                            <span className="text-neon-lime">+</span>
+                          <li key={i} className="text-christmas-snow/90 flex items-start gap-2">
+                            <span className="text-christmas-green">+</span>
                             {buff}
                           </li>
                         ))}
@@ -77,13 +81,14 @@ export default function PatchNotes() {
 
                     {/* Nerfs */}
                     <div>
-                      <h3 className="text-2xl font-bold text-neon-pink mb-3 flex items-center gap-2">
-                        ⬇️ Nerfs
+                      <h3 className="text-2xl font-bold text-christmas-red mb-3 flex items-center gap-2">
+                        <TrendingDown className="w-6 h-6" />
+                        Nerfs
                       </h3>
                       <ul className="space-y-2">
                         {patch.nerfs.map((nerf, i) => (
-                          <li key={i} className="text-foreground/90 flex items-start gap-2">
-                            <span className="text-neon-pink">-</span>
+                          <li key={i} className="text-christmas-snow/90 flex items-start gap-2">
+                            <span className="text-christmas-red">-</span>
                             {nerf}
                           </li>
                         ))}
@@ -92,13 +97,14 @@ export default function PatchNotes() {
 
                     {/* Bug Fixes */}
                     <div>
-                      <h3 className="text-2xl font-bold text-neon-cyan mb-3 flex items-center gap-2">
-                        🐛 Bug Fixes
+                      <h3 className="text-2xl font-bold text-christmas-ice mb-3 flex items-center gap-2">
+                        <Bug className="w-6 h-6" />
+                        Bug Fixes
                       </h3>
                       <ul className="space-y-2">
                         {patch.bugFixes.map((fix, i) => (
-                          <li key={i} className="text-foreground/90 flex items-start gap-2">
-                            <span className="text-neon-cyan">✓</span>
+                          <li key={i} className="text-christmas-snow/90 flex items-start gap-2">
+                            <span className="text-christmas-ice">✓</span>
                             {fix}
                           </li>
                         ))}
@@ -107,13 +113,14 @@ export default function PatchNotes() {
 
                     {/* New Features */}
                     <div>
-                      <h3 className="text-2xl font-bold text-neon-purple mb-3 flex items-center gap-2">
-                        ✨ New Features
+                      <h3 className="text-2xl font-bold text-christmas-gold mb-3 flex items-center gap-2">
+                        <Star className="w-6 h-6" />
+                        New Features
                       </h3>
                       <ul className="space-y-2">
                         {patch.newFeatures.map((feature, i) => (
-                          <li key={i} className="text-foreground/90 flex items-start gap-2">
-                            <span className="text-neon-purple">★</span>
+                          <li key={i} className="text-christmas-snow/90 flex items-start gap-2">
+                            <span className="text-christmas-gold">★</span>
                             {feature}
                           </li>
                         ))}
