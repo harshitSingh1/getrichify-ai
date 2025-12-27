@@ -5,7 +5,7 @@ import { Card } from "@/components/ui/card";
 import { Snowfall } from "@/components/Snowfall";
 import { Switch } from "@/components/ui/switch";
 import { Label } from "@/components/ui/label";
-import { supabase } from "@/integrations/supabase/client";
+import { getBackendClient } from "@/lib/backendClient";
 import { toast } from "sonner";
 import { Send, Volume2, VolumeX, Sparkles, Gift } from "lucide-react";
 
@@ -94,6 +94,7 @@ export default function Chat() {
     }
 
     try {
+      const supabase = getBackendClient();
       const { data, error } = await supabase.functions.invoke("chat", {
         body: { messages: [...messages, userMessage] },
       });
