@@ -60,7 +60,7 @@ export const Snowfall = () => {
             width: `${star.size}px`,
             height: `${star.size}px`,
             animationDelay: `${star.delay}s`,
-            boxShadow: `0 0 ${star.size * 2}px hsl(var(--christmas-snow))`,
+            boxShadow: `0 0 ${star.size * 2}px rgba(248, 250, 252, 0.8)`,
           }}
         />
       ))}
@@ -77,7 +77,7 @@ export const Snowfall = () => {
             opacity: flake.opacity,
             animationDelay: `${flake.delay}s`,
             animationDuration: `${flake.duration}s`,
-            boxShadow: `0 0 ${flake.size}px hsl(var(--christmas-snow) / 0.5)`,
+            boxShadow: `0 0 ${flake.size}px rgba(248, 250, 252, 0.5)`,
           }}
         />
       ))}
