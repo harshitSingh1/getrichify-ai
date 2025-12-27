@@ -4,7 +4,7 @@ import { Card } from "@/components/ui/card";
 import { Switch } from "@/components/ui/switch";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
-import { supabase } from "@/integrations/supabase/client";
+import { getBackendClient } from "@/lib/backendClient";
 import { toast } from "sonner";
 import { Send, PartyPopper, Brain, Sparkles } from "lucide-react";
 import { Snowfall } from "@/components/Snowfall";
@@ -22,6 +22,7 @@ export default function Serious() {
     setResult("");
 
     try {
+      const supabase = getBackendClient();
       const { data, error } = await supabase.functions.invoke("serious-mode", {
         body: { message: input, funnyMode },
       });
