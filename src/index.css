@@ -1,0 +1,134 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Christmas Theme Design System - All colors MUST be HSL */
+
+@layer base {
+  :root {
+    /* Christmas Night Sky Background */
+    --background: 220 30% 8%;
+    --foreground: 45 30% 96%;
+
+    /* Frosted Glass Cards */
+    --card: 220 25% 12%;
+    --card-foreground: 45 30% 96%;
+
+    --popover: 220 25% 12%;
+    --popover-foreground: 45 30% 96%;
+
+    /* Christmas Red - Primary */
+    --primary: 0 72% 50%;
+    --primary-foreground: 45 30% 98%;
+
+    /* Emerald Green - Secondary */
+    --secondary: 145 63% 35%;
+    --secondary-foreground: 45 30% 98%;
+
+    /* Muted Winter Tones */
+    --muted: 220 20% 18%;
+    --muted-foreground: 220 15% 65%;
+
+    /* Gold Accent */
+    --accent: 45 93% 55%;
+    --accent-foreground: 220 30% 8%;
+
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 45 30% 98%;
+
+    /* Frosted borders */
+    --border: 220 20% 22%;
+    --input: 220 20% 22%;
+    --ring: 0 72% 50%;
+
+    --radius: 0.75rem;
+
+    /* Christmas Colors */
+    --christmas-red: 0 72% 50%;
+    --christmas-red-dark: 0 72% 40%;
+    --christmas-green: 145 63% 35%;
+    --christmas-green-light: 145 50% 50%;
+    --christmas-gold: 45 93% 55%;
+    --christmas-gold-light: 45 90% 70%;
+    --christmas-snow: 210 40% 98%;
+    --christmas-ice: 200 60% 90%;
+    --christmas-midnight: 220 30% 8%;
+    --christmas-pine: 155 40% 25%;
+    --christmas-cranberry: 350 70% 45%;
+
+    /* Gradients */
+    --gradient-primary: linear-gradient(135deg, hsl(0 72% 50%), hsl(350 70% 45%));
+    --gradient-secondary: linear-gradient(135deg, hsl(145 63% 35%), hsl(155 40% 25%));
+    --gradient-gold: linear-gradient(135deg, hsl(45 93% 55%), hsl(38 90% 50%));
+    --gradient-text: linear-gradient(135deg, hsl(0 72% 55%), hsl(45 93% 55%), hsl(145 63% 45%));
+    --gradient-snow: linear-gradient(180deg, hsl(220 30% 12%) 0%, hsl(220 30% 8%) 100%);
+    --gradient-aurora: linear-gradient(135deg, hsl(145 50% 40%), hsl(200 60% 50%), hsl(280 60% 50%));
+    --gradient-festive: linear-gradient(135deg, hsl(0 72% 50%), hsl(145 63% 35%));
+
+    /* Shadows */
+    --shadow-glow: 0 4px 30px hsl(0 72% 50% / 0.3);
+    --shadow-gold: 0 4px 30px hsl(45 93% 55% / 0.3);
+    --shadow-green: 0 4px 30px hsl(145 63% 35% / 0.3);
+    --shadow-card: 0 8px 32px hsl(220 30% 5% / 0.5);
+    --shadow-frost: 0 8px 32px hsl(200 60% 90% / 0.1), inset 0 0 0 1px hsl(200 60% 90% / 0.1);
+  }
+}
+
+@layer utilities {
+  .gradient-text {
+    background: var(--gradient-text);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .christmas-glow {
+    text-shadow: 0 2px 20px hsl(var(--christmas-red) / 0.5),
+                 0 4px 40px hsl(var(--christmas-gold) / 0.3);
+  }
+
+  .gold-glow {
+    text-shadow: 0 2px 20px hsl(var(--christmas-gold) / 0.5);
+  }
+
+  .green-glow {
+    text-shadow: 0 2px 20px hsl(var(--christmas-green) / 0.5);
+  }
+
+  .page-heading {
+    @apply text-4xl md:text-5xl lg:text-6xl font-black tracking-tight;
+  }
+
+  .frosted-glass {
+    @apply bg-card/60 backdrop-blur-xl border border-christmas-snow/10;
+    box-shadow: var(--shadow-frost);
+  }
+
+  .festive-card {
+    @apply frosted-glass rounded-2xl p-6 transition-all duration-300;
+  }
+
+  .festive-card:hover {
+    @apply border-christmas-gold/30;
+    box-shadow: 0 8px 40px hsl(var(--christmas-gold) / 0.15);
+  }
+
+  .sparkle {
+    animation: sparkle 2s ease-in-out infinite;
+  }
+
+  @keyframes sparkle {
+    0%, 100% { opacity: 0.5; transform: scale(1); }
+    50% { opacity: 1; transform: scale(1.2); }
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+  }
+}
