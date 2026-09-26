@@ -8,6 +8,7 @@ import { Label } from "@/components/ui/label";
 import { getBackendClient } from "@/lib/backendClient";
 import { toast } from "sonner";
 import { Send, Volume2, VolumeX, Sparkles, Gift } from "lucide-react";
+import { useMusic } from "@/context/MusicContext";
 
 interface Message {
   role: "user" | "assistant";
@@ -18,7 +19,7 @@ export default function Chat() {
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const [soundEnabled, setSoundEnabled] = useState(true);
+  const { isMuted, toggleMute } = useMusic();
   const [shake, setShake] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const audioRef = useRef<HTMLAudioElement | null>(null);
@@ -30,9 +31,10 @@ export default function Chat() {
       setMessages(JSON.parse(saved));
     }
 
-    // Initialize audio
-    audioRef.current = new Audio("https://assets.mixkit.co/active_storage/sfx/2570/2570-preview.mp3");
+    // Initialize notification chime audio
+    audioRef.current = new Audio("/jingle_bell1.mp3");
   }, []);
+
 
   useEffect(() => {
     // Save chat history
@@ -105,7 +107,8 @@ export default function Chat() {
       setMessages((prev) => [...prev, aiMessage]);
 
       // Effects
-      if (soundEnabled && audioRef.current) {
+      if (!isMuted && audioRef.current) {
+        audioRef.current.currentTime = 0;
         audioRef.current.play().catch(console.error);
       }
       setShake(true);
@@ -118,9 +121,10 @@ export default function Chat() {
       flash.className = "fixed inset-0 bg-christmas-gold opacity-20 pointer-events-none z-50";
       document.body.appendChild(flash);
       setTimeout(() => flash.remove(), 100);
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error("Chat error:", error);
-      toast.error(error.message || "Failed to generate response");
+      const msg = error instanceof Error ? error.message : "Failed to generate response";
+      toast.error(msg);
     } finally {
       setIsLoading(false);
     }
@@ -146,15 +150,16 @@ export default function Chat() {
           {/* Sound Toggle */}
           <div className="flex items-center justify-center gap-3 mb-6">
             <Switch
-              checked={soundEnabled}
-              onCheckedChange={setSoundEnabled}
+              checked={!isMuted}
+              onCheckedChange={toggleMute}
               id="sound"
             />
             <Label htmlFor="sound" className="text-lg font-bold cursor-pointer flex items-center gap-2">
-              {soundEnabled ? <Volume2 className="w-5 h-5 text-christmas-gold" /> : <VolumeX className="w-5 h-5 text-muted-foreground" />}
-              <span className="text-christmas-snow">Jingle Mode</span>
+              {!isMuted ? <Volume2 className="w-5 h-5 text-christmas-gold animate-pulse" /> : <VolumeX className="w-5 h-5 text-muted-foreground" />}
+              <span className="text-christmas-snow">Jingle Bells Music {!isMuted ? "(On)" : "(Muted)"}</span>
             </Label>
           </div>
+
 
           {/* Messages */}
           <Card className="frosted-glass p-6 mb-6 min-h-[500px] max-h-[600px] overflow-y-auto">

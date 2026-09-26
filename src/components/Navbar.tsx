@@ -1,12 +1,14 @@
 import { Link, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Menu, X, Snowflake } from "lucide-react";
+import { Menu, X, Snowflake, Volume2, VolumeX } from "lucide-react";
 import { useState } from "react";
 import { Logo } from "./Logo";
+import { useMusic } from "@/context/MusicContext";
 
 export const Navbar = () => {
   const location = useLocation();
   const [isOpen, setIsOpen] = useState(false);
+  const { isMuted, toggleMute, isPlaying } = useMusic();
 
   const links = [
     { to: "/", label: "Home" },
@@ -28,7 +30,7 @@ export const Navbar = () => {
             <Logo />
           </Link>
 
-          {/* Desktop Menu */}
+          {/* Desktop Menu & Audio Controller */}
           <div className="hidden lg:flex items-center gap-1">
             {links.map((link) => (
               <Button
@@ -48,17 +50,55 @@ export const Navbar = () => {
                 </Link>
               </Button>
             ))}
+
+            {/* Global Music Mute / Unmute Button */}
+            <div className="ml-2 pl-2 border-l border-christmas-snow/15 flex items-center">
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={toggleMute}
+                title={isMuted ? "Unmute holiday music" : "Mute holiday music"}
+                className={`relative flex items-center gap-2 px-3 py-1.5 rounded-full border transition-all duration-300 text-xs font-semibold ${
+                  isMuted
+                    ? "border-muted-foreground/30 text-muted-foreground hover:text-christmas-snow hover:border-christmas-snow/40"
+                    : "border-christmas-gold/40 bg-christmas-gold/10 text-christmas-gold shadow-glow"
+                }`}
+              >
+                {isMuted ? (
+                  <VolumeX className="w-4 h-4 text-muted-foreground" />
+                ) : (
+                  <Volume2 className="w-4 h-4 text-christmas-gold animate-pulse" />
+                )}
+                <span>{isMuted ? "Muted" : isPlaying ? "Jingle Playing" : "Jingle Paused"}</span>
+              </Button>
+            </div>
           </div>
 
-          {/* Mobile Menu Button */}
-          <Button
-            variant="ghost"
-            size="icon"
-            className="lg:hidden hover:bg-christmas-snow/10"
-            onClick={() => setIsOpen(!isOpen)}
-          >
-            {isOpen ? <X className="text-christmas-snow" /> : <Menu className="text-christmas-snow" />}
-          </Button>
+          {/* Mobile Right Controls: Mute Button & Menu Toggle */}
+          <div className="flex items-center gap-2 lg:hidden">
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={toggleMute}
+              className={`flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium border ${
+                isMuted
+                  ? "border-muted-foreground/30 text-muted-foreground"
+                  : "border-christmas-gold/40 bg-christmas-gold/10 text-christmas-gold"
+              }`}
+            >
+              {isMuted ? <VolumeX className="w-4 h-4" /> : <Volume2 className="w-4 h-4 animate-pulse" />}
+              <span>{isMuted ? "Unmute" : "Mute"}</span>
+            </Button>
+
+            <Button
+              variant="ghost"
+              size="icon"
+              className="hover:bg-christmas-snow/10"
+              onClick={() => setIsOpen(!isOpen)}
+            >
+              {isOpen ? <X className="text-christmas-snow" /> : <Menu className="text-christmas-snow" />}
+            </Button>
+          </div>
         </div>
 
         {/* Mobile Menu */}
@@ -89,3 +129,4 @@ export const Navbar = () => {
     </nav>
   );
 };
+
