@@ -1,6 +1,6 @@
 # GetRichify 💰
 
-**Live Website:** [https://get-rich-o-matic.lovable.app](https://get-rich-o-matic.lovable.app)
+**Live Website:** [https://getrichify-ai.wasmer.app/](https://getrichify-ai.wasmer.app/)
 
 ## 🎯 Project Aim
 
